@@ -1,9 +1,14 @@
 .items {
-    list-style: none;
-    margin: auto;
-    padding: 0;
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    align-items: flex-start;
-  }
+  display: grid;
+  grid-template-columns: repeat(8, 4rem);
+  grid-template-rows: repeat(6, 4rem);
+  grid-template-areas:
+    "Weapon Weapon . Helm Helm . Offhand Offhand"
+    "Weapon Weapon . Helm Helm . Offhand Offhand"
+    "Weapon Weapon . BodyArmour BodyArmour Amulet  Offhand Offhand"
+    "Weapon Weapon Ring BodyArmour BodyArmour Ring2 Offhand Offhand"
+    ". Gloves Gloves BodyArmour BodyArmour Boots Boots ."
+    ". Gloves Gloves Belt Belt Boots Boots .";
+  gap: .5rem;
+  justify-content: center;
+}

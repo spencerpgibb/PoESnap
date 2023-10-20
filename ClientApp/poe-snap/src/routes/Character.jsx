@@ -9,11 +9,11 @@ function Character() {
   return (
     <>
       {items.length > 0 && (
-        <ul className={classes.items}>
+        <div className={classes.items}>
           {items.map((item) => (
             <Item item={item} />
           ))}
-        </ul>
+        </div>
       )}
       {items.length === 0 && (
         <>
