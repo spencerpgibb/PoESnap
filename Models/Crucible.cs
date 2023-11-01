@@ -1,17 +1,18 @@
-﻿using System.Text.Json.Serialization;
+﻿using MongoDB.Bson.Serialization.Attributes;
 
 namespace PoESnap.Models
 {
     public class Crucible
     {
-        [JsonPropertyName("layout")]
+        [BsonElement("layout")]
         public string Layout { get; set; }
 
-        [JsonPropertyName("nodes")]
+        [BsonElement("nodes")]
         public Dictionary<string, CrucibleNode> Nodes { get; set; }
 
         public Crucible()
         {
+            Layout = string.Empty;
             Nodes = new Dictionary<string, CrucibleNode>();
         }
     }

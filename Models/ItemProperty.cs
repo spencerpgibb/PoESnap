@@ -1,25 +1,25 @@
-﻿using System.Text.Json.Serialization;
+﻿using MongoDB.Bson.Serialization.Attributes;
 
 namespace PoESnap.Models
 {
     public class ItemProperty
     {
-        [JsonPropertyName("name")]
+        [BsonElement("name")]
         public string Name { get; set; }
 
-        [JsonPropertyName("values")]
+        [BsonElement("values")]
         public List<object> Values { get; set; }
 
-        [JsonPropertyName("displayMode")]
+        [BsonElement("displayMode")]
         public uint DisplayMode { get; set; }
 
-        [JsonPropertyName("progress")]
+        [BsonElement("progress")]
         public double? Progress { get; set; }
 
-        [JsonPropertyName("type")]
+        [BsonElement("type")]
         public uint? Type { get; set; }
 
-        [JsonPropertyName("suffix")]
+        [BsonElement("suffix")]
         public string? Suffix { get; set; }
 
         public ItemProperty()

@@ -1,19 +1,19 @@
-﻿using System.Text.Json.Serialization;
+﻿using MongoDB.Bson.Serialization.Attributes;
 
 namespace PoESnap.Models
 {
     public class Extended
     {
-        [JsonPropertyName("category")]
+        [BsonElement("category")]
         public string? Category { get; set; }  
 
-        [JsonPropertyName("subcategories")]
+        [BsonElement("subcategories")]
         public List<string>? Subcategories { get; set; }
 
-        [JsonPropertyName("prefixes")]
+        [BsonElement("prefixes")]
         public uint? prefixes { get; set; }
 
-        [JsonPropertyName("suffixes")]
+        [BsonElement("suffixes")]
         public uint? suffixes { get; set; }
     }
 }

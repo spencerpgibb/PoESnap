@@ -1,243 +1,252 @@
-﻿using System.Text.Json.Serialization;
+﻿using MongoDB.Bson.Serialization.Attributes;
 
 namespace PoESnap.Models
 {
     public class Item
     {
-        [JsonPropertyName("verified")]
+        [BsonElement("verified")]
         public bool Verified { get; set; }
 
-        [JsonPropertyName("w")]
+        [BsonElement("w")]
         public uint Width { get; set; }
 
-        [JsonPropertyName("h")]
+        [BsonElement("h")]
         public uint Height { get; set; }
 
-        [JsonPropertyName("icon")]
+        [BsonElement("icon")]
         public string Icon { get; set; }
 
-        [JsonPropertyName("support")]
+        [BsonElement("support")]
         public bool? Support { get; set; }
 
-        [JsonPropertyName("stackSize")]
+        [BsonElement("stackSize")]
         public int? StackSize { get; set; }
 
-        [JsonPropertyName("maxStackSize")]
+        [BsonElement("maxStackSize")]
         public int? MaxStackSize { get; set; }
 
-        [JsonPropertyName("stackSizeText")]
+        [BsonElement("stackSizeText")]
         public string? StackSizeText { get; set; }
 
-        [JsonPropertyName("league")]
+        [BsonElement("league")]
         public string? League { get; set; }
 
-        [JsonPropertyName("id")]
-        public string? Id { get; set; }
+        [BsonElement("id")]
+        public string? ItemId { get; set; }
 
-        [JsonPropertyName("influences")]
+        [BsonElement("influences")]
         public object? Influences { get; set; }
 
-        [JsonPropertyName("elder")]
+        [BsonElement("elder")]
         public bool? Elder { get; set; }
 
-        [JsonPropertyName("shaper")]
+        [BsonElement("shaper")]
         public bool? Shaper { get; set; }
 
-        [JsonPropertyName("searing")]
+        [BsonElement("searing")]
         public bool? Searing { get; set; }
 
-        [JsonPropertyName("tangled")]
+        [BsonElement("tangled")]
         public bool? Tangled { get; set; }
 
-        [JsonPropertyName("abyssJewel")]
+        [BsonElement("abyssJewel")]
         public bool? AbyssJewel { get; set; }
 
-        [JsonPropertyName("delve")]
+        [BsonElement("delve")]
         public bool? Delve { get; set; }
 
-        [JsonPropertyName("fractured")]
+        [BsonElement("fractured")]
         public bool? Fractured { get; set; }
 
-        [JsonPropertyName("synthesized")]
-        public bool? Synthesized { get; set; }
+        [BsonElement("synthesised")]
+        public bool? Synthesised { get; set; }
 
-        [JsonPropertyName("sockets")]
+        [BsonElement("sockets")]
         public List<Socket>? Sockets { get; set; }
 
-        [JsonPropertyName("socketedItems")]
+        [BsonElement("socketedItems")]
         public List<Item>? SocketedItems { get; set; }
 
-        [JsonPropertyName("name")]
+        [BsonElement("name")]
         public string Name { get; set; }
 
-        [JsonPropertyName("typeLine")]
+        [BsonElement("typeLine")]
         public string TypeLine { get; set; }
 
-        [JsonPropertyName("baseType")]
+        [BsonElement("baseType")]
         public string BaseType { get; set; }
 
-        [JsonPropertyName("identified")]
+        [BsonElement("identified")]
         public bool Identified { get; set; }
 
-        [JsonPropertyName("itemLevel")]
+        [BsonElement("itemLevel")]
         public int? ItemLevel { get; set; }
 
-        [JsonPropertyName("ilvl")]
+        [BsonElement("ilvl")]
         public int ItemLvl { get; set; }
 
-        [JsonPropertyName("note")]
+        [BsonElement("note")]
         public string? Note { get; set; }
 
-        [JsonPropertyName("forum_note")]
+        [BsonElement("forum_note")]
         public string? ForumNote { get; set; }
 
-        [JsonPropertyName("lockedToCharacter")]
+        [BsonElement("lockedToCharacter")]
         public bool? LockedToCharacter { get; set; }
 
-        [JsonPropertyName("lockedToAccount")]
+        [BsonElement("lockedToAccount")]
         public bool? LockedToAccount { get; set; }
 
-        [JsonPropertyName("duplicated")]
+        [BsonElement("duplicated")]
         public bool? Duplicated { get; set; }
 
-        [JsonPropertyName("cisRaceReward")]
+        [BsonElement("split")]
+        public bool? Split { get; set; }
+
+        [BsonElement("corrupted")]
+        public bool? Corrupted { get; set; }
+
+        [BsonElement("unmodifiable")]
+        public bool? Unmodifiable { get; set; }
+
+        [BsonElement("cisRaceReward")]
         public bool? CisRaceReward { get; set; }
 
-        [JsonPropertyName("seaRaceReward")]
+        [BsonElement("seaRaceReward")]
         public bool? SeaRaceReward { get; set; }
 
-        [JsonPropertyName("thRaceReward")]
+        [BsonElement("thRaceReward")]
         public bool? ThRaceReward { get; set; }
 
-        [JsonPropertyName("properties")]
+        [BsonElement("properties")]
         public List<ItemProperty>? Properties { get; set; }
 
-        [JsonPropertyName("notableProperties")]
+        [BsonElement("notableProperties")]
         public List<ItemProperty>? NotableProperties { get; set; }
 
-        [JsonPropertyName("requirements")]
+        [BsonElement("requirements")]
         public List<ItemProperty>? Requirements { get; set; }
 
-        [JsonPropertyName("additionalProperties")]
+        [BsonElement("additionalProperties")]
         public List<ItemProperty>? AdditionalProperties { get; set; }
 
-        [JsonPropertyName("nextLevelRequirements")]
+        [BsonElement("nextLevelRequirements")]
         public List<ItemProperty>? NextLevelRequirements { get; set; }
 
-        [JsonPropertyName("talismanTier")]
+        [BsonElement("talismanTier")]
         public int? TalismanTier { get; set; }
 
-        [JsonPropertyName("secDescrText")]
+        [BsonElement("secDescrText")]
         public string? SecondaryDescriptionText { get; set; }
 
-        [JsonPropertyName("utilityMods")]
+        [BsonElement("utilityMods")]
         public List<string>? UtilityMods { get; set; }
 
-        [JsonPropertyName("logbookMods")]
+        [BsonElement("logbookMods")]
         public List<LogbookMods>? LogbookMods { get; set; }
 
-        [JsonPropertyName("enchantMods")]
+        [BsonElement("enchantMods")]
         public List<string>? EnchantMods { get; set; }
 
-        [JsonPropertyName("scourgeMods")]
+        [BsonElement("scourgeMods")]
         public List<string>? ScourgeMods { get; set; }
 
-        [JsonPropertyName("implicitMods")]
+        [BsonElement("implicitMods")]
         public List<string>? ImplicitMods { get; set; }
 
-        [JsonPropertyName("ultimatumMods")] // ultimatum icon, tier
+        [BsonElement("ultimatumMods")] // ultimatum icon, tier
         public List<Tuple<string, uint>>? UltimatumMods { get; set; }
 
-        [JsonPropertyName("explicitMods")]
+        [BsonElement("explicitMods")]
         public List<string>? ExplicitMods { get; set; }
 
-        [JsonPropertyName("craftedMods")]
+        [BsonElement("craftedMods")]
         public List<string>? CraftedMods { get; set; }
 
-        [JsonPropertyName("fracturedMods")]
+        [BsonElement("fracturedMods")]
         public List<string>? FracturedMods { get; set; }
 
-        [JsonPropertyName("crucibleMods")]
+        [BsonElement("crucibleMods")]
         public List<string>? CrucibleMods { get; set; }
 
-        [JsonPropertyName("cosmeticMods")]
+        [BsonElement("cosmeticMods")]
         public List<string>? CosmeticMods { get; set; }
 
-        [JsonPropertyName("veiledMods")]
+        [BsonElement("veiledMods")]
         public List<string>? VeiledMods { get; set; }
 
-        [JsonPropertyName("veiled")]
+        [BsonElement("veiled")]
         public bool? Veiled { get; set; }
 
-        [JsonPropertyName("descrText")]
+        [BsonElement("descrText")]
         public string? DescriptionText { get; set; }
 
-        [JsonPropertyName("flavourText")]
+        [BsonElement("flavourText")]
         public List<string>? FlavourText { get; set; }
 
-        [JsonPropertyName("flavourTextParsed")]
+        [BsonElement("flavourTextParsed")]
         public List<string>? FlavourTextParsed { get; set; }
 
-        [JsonPropertyName("flavourTextNote")]
+        [BsonElement("flavourTextNote")]
         public string? FlavourTextNote { get; set; }
 
-        [JsonPropertyName("prophecyText")]
+        [BsonElement("prophecyText")]
         public string? ProphecyText { get; set; }
 
-        [JsonPropertyName("isRelic")]
+        [BsonElement("isRelic")]
         public bool? IsRelic { get; set; }
 
-        [JsonPropertyName("foilVariation")]
+        [BsonElement("foilVariation")]
         public int? FoilVariation { get; set; }
 
-        [JsonPropertyName("replica")]
+        [BsonElement("replica")]
         public bool? Replica { get; set; }
 
-        [JsonPropertyName("foreseeing")]
+        [BsonElement("foreseeing")]
         public bool? Foreseeing { get; set; }
 
-        [JsonPropertyName("incubtedItem")]
+        [BsonElement("incubatedItem")]
         public IncubatedItem? IncubatedItem { get; set; }
 
-        [JsonPropertyName("scourged")]
+        [BsonElement("scourged")]
         public Scourged? Scourged { get; set; }
 
-        [JsonPropertyName("crucible")]
+        [BsonElement("crucible")]
         public Crucible? Crucible { get; set; }
 
-        [JsonPropertyName("ruthless")]
+        [BsonElement("ruthless")]
         public bool? Ruthless { get; set; }
 
-        [JsonPropertyName("frameType")]
+        [BsonElement("frameType")]
         public uint? FrameType { get; set; }
 
-        [JsonPropertyName("artFilename")]
+        [BsonElement("artFilename")]
         public string? ArtFilename { get; set; }
 
-        [JsonPropertyName("hybrid")]
+        [BsonElement("hybrid")]
         public Hybrid? Hybrid { get; set; }
 
-        [JsonPropertyName("extended")]
+        [BsonElement("extended")]
         public Extended? Extended { get; set; }
 
-        [JsonPropertyName("x")]
+        [BsonElement("x")]
         public uint? X { get; set; }
 
-        [JsonPropertyName("y")]
+        [BsonElement("y")]
         public uint? Y { get; set; }
 
-        [JsonPropertyName("inventoryId")]
+        [BsonElement("inventoryId")]
         public string? InventoryId { get; set; }
 
-        [JsonPropertyName("socket")]
+        [BsonElement("socket")]
         public uint? Socket { get; set; }
 
-        [JsonPropertyName("colour")]
+        [BsonElement("colour")]
         public string? Colour { get; set; }
 
         public Item()
         {
-            Id = string.Empty;
+            ItemId = string.Empty;
             Icon = string.Empty;
             Name = string.Empty;
             TypeLine = string.Empty;

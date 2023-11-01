@@ -1,16 +1,16 @@
-﻿using System.Text.Json.Serialization;
+﻿using MongoDB.Bson.Serialization.Attributes;
 
 namespace PoESnap.Models
 {
     public class LogbookMods
     {
-        [JsonPropertyName("name")]
+        [BsonElement("name")]
         public string Name { get; set; }
 
-        [JsonPropertyName("faction")]
+        [BsonElement("faction")]
         public KeyValuePair<string, string> Faction { get; set; }
 
-        [JsonPropertyName("mods")]
+        [BsonElement("mods")]
         public List<string> Mods { get; set; }
 
         public LogbookMods() 

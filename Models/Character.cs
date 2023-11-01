@@ -1,13 +1,17 @@
-﻿using System.Text.Json.Serialization;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace PoESnap.Models
 {
     public class Character
     {
-        [JsonPropertyName("items")]
+        [BsonElement("_id")]
+        public ObjectId Id { get; set; }
+
+        [BsonElement("items")]
         public List<Item>? Items { get; set; }
 
-        [JsonPropertyName("character")]
+        [BsonElement("character")]
         public CharacterMetadata? Metadata { get; set; }
     }
 }

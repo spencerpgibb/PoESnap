@@ -1,37 +1,58 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MongoDB.Bson.Serialization;
+using MongoDB.Bson.Serialization.Conventions;
+using MongoDB.Driver;
 using PoESnap.Models;
-using System.Text.Json;
 
 namespace PoESnap.Services
 {
     public class CharacterService : ICharacterService
     {
         private readonly ILogger<CharacterService> _logger;
-        private readonly List<Character> _characterList;
         private readonly HttpClient _httpClient;
+        private static string MongoConnectionString = "mongodb://localhost:27017";
+        private readonly IMongoDatabase characterDatabase;
+        private readonly IMongoCollection<Character> _characterCollection;
 
         public CharacterService(ILogger<CharacterService> logger)
         {
             _logger = logger;
             _httpClient = new HttpClient();
-            _characterList = new List<Character>();
+
+            // This allows automapping of the camelCase database fields to our models. 
+            var camelCaseConvention = new ConventionPack { new CamelCaseElementNameConvention() };
+            ConventionRegistry.Register("CamelCase", camelCaseConvention, type => true);
+            ConventionRegistry.Register("IgnoreExtraElements", camelCaseConvention, type => true);
+
+            // Establish the connection to MongoDB and get the restaurants database
+            var mongoClient = new MongoClient(MongoConnectionString);
+            characterDatabase = mongoClient.GetDatabase("poe_snap"); 
+            _characterCollection = characterDatabase.GetCollection<Character>("characters");
+
         }
 
         public Character GetCharacter(string characterName)
         {
-            if (_characterList == null || _characterList.Count == 0)
+            if (_characterCollection == null)
             {
                 throw new Exception("No Characters present");
             }
 
-            var character = _characterList.Find(c => c.Metadata != null && c.Metadata.Name == characterName);
-
-            if (character == null)
+            try
             {
-                throw new Exception("Character not found");
-            }
+                var character = _characterCollection.AsQueryable().Where(r => r.Metadata != null && r.Metadata.Name == characterName).FirstOrDefault();
+                
+                if (character == null)
+                {
+                    throw new Exception("Character not found");
+                }
 
-            return character;       
+                return character;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw;
+            }     
         }
 
         public async Task<Character> GetCharacterAsync(string characterName)
@@ -59,13 +80,18 @@ namespace PoESnap.Services
 
         public async void AddCharacter(string accountName, string characterName)
         {
+            var character = _characterCollection.AsQueryable().Where(c => c.Metadata != null && c.Metadata.Name == characterName).FirstOrDefault();
+
+            if (character != null)
+                return;
+
             var result = await _httpClient.GetStringAsync($"https://www.pathofexile.com/character-window/get-items?accountName={accountName}&character={characterName}&realm=pc");
 
-            var character = JsonSerializer.Deserialize<Character>(result);
+            character = BsonSerializer.Deserialize<Character>(result);
 
             if (character != null)
             {
-                _characterList.Add(character);
+                _characterCollection.InsertOne(character);
             }
         }
     }

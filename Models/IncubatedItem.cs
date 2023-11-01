@@ -1,19 +1,19 @@
-﻿using System.Text.Json.Serialization;
+﻿using MongoDB.Bson.Serialization.Attributes;
 
 namespace PoESnap.Models
 {
     public class IncubatedItem
     {
-        [JsonPropertyName("name")]
+        [BsonElement("name")]
         public string Name { get; set; }
 
-        [JsonPropertyName("level")]
+        [BsonElement("level")]
         public uint Level { get; set; }
 
-        [JsonPropertyName("progress")]
+        [BsonElement("progress")]
         public uint Progress { get; set; }
 
-        [JsonPropertyName("total")]
+        [BsonElement("total")]
         public uint Total { get; set; }
 
         public IncubatedItem() 

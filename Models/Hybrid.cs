@@ -1,20 +1,23 @@
-﻿using System.Text.Json.Serialization;
+﻿using MongoDB.Bson.Serialization.Attributes;
 
 namespace PoESnap.Models
 {
     public class Hybrid
     {
-        [JsonPropertyName("isVaalGem")]
+        [BsonElement("isVaalGem")]
         public bool? IsVaalGem { get; set; }
 
-        [JsonPropertyName("baseTypeName")]
+        [BsonElement("baseTypeName")]
         public string BaseTypeName { get; set; }
 
-        [JsonPropertyName("explicitMods")]
+        [BsonElement("explicitMods")]
         public List<string>? ExplicitMods { get; set; }
 
-        [JsonPropertyName("secDescrText")]
+        [BsonElement("secDescrText")]
         public string? SecondaryDescriptionText { get; set; }
+
+        [BsonElement("properties")]
+        public List<ItemProperty>? Properties { get; set; }
 
         public Hybrid()
         {

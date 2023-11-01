@@ -1,43 +1,43 @@
-﻿using System.Text.Json.Serialization;
+﻿using MongoDB.Bson.Serialization.Attributes;
 
 namespace PoESnap.Models
 {
     public class CrucibleNode
     {
-        [JsonPropertyName("skill")]
+        [BsonElement("skill")]
         public uint? Skill { get; set; }
 
-        [JsonPropertyName("tier")]
+        [BsonElement("tier")]
         public uint? Tier { get; set; }
 
-        [JsonPropertyName("icon")]
+        [BsonElement("icon")]
         public string? Icon { get; set; }
 
-        [JsonPropertyName("allocated")]
+        [BsonElement("allocated")]
         public bool? Allocated { get; set; }
 
-        [JsonPropertyName("isNotable")]
+        [BsonElement("isNotable")]
         public bool? IsNotable { get; set; }
 
-        [JsonPropertyName("isReward")]
+        [BsonElement("isReward")]
         public bool? IsReward { get; set; }
 
-        [JsonPropertyName("stats")]
+        [BsonElement("stats")]
         public List<string>? Stats { get; set; }
 
-        [JsonPropertyName("reminderText")]
+        [BsonElement("reminderText")]
         public List<string>? ReminderText { get; set; }
 
-        [JsonPropertyName("orbit")]
+        [BsonElement("orbit")]
         public uint? Orbit { get; set; }
 
-        [JsonPropertyName("orbitIndex")]
+        [BsonElement("orbitIndex")]
         public uint? OrbitIndex { get; set; }
 
-        [JsonPropertyName("out")]
+        [BsonElement("out")]
         public List<string> Out { get; set; }
 
-        [JsonPropertyName("in")]
+        [BsonElement("in")]
         public List<string> In { get; set; }
 
         public CrucibleNode()

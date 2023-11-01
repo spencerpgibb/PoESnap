@@ -1,4 +1,4 @@
-﻿using System.Text.Json.Serialization;
+﻿using MongoDB.Bson.Serialization.Attributes;
 
 namespace PoESnap.Models
 {
@@ -12,22 +12,22 @@ namespace PoESnap.Models
             League = string.Empty;
         }
 
-        [JsonPropertyName("name")]
+        [BsonElement("name")]
         public string Name { get; set; }
 
-        [JsonPropertyName("realm")]
+        [BsonElement("realm")]
         public string Realm { get; set; }
 
-        [JsonPropertyName("class")]
+        [BsonElement("class")]
         public string Class { get; set; }
 
-        [JsonPropertyName("league")]
+        [BsonElement("league")]
         public string League { get; set; }
 
-        [JsonPropertyName("level")]
+        [BsonElement("level")]
         public int Level { get; set; }
 
-        [JsonPropertyName("pinnable")]
+        [BsonElement("pinnable")]
         public bool? Pinnable { get; set; }
     }
 }

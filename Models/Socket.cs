@@ -1,16 +1,16 @@
-﻿using System.Text.Json.Serialization;
+﻿using MongoDB.Bson.Serialization.Attributes;
 
 namespace PoESnap.Models
 {
     public class Socket
     {
-        [JsonPropertyName("group")]
+        [BsonElement("group")]
         public uint Group { get; set; }
 
-        [JsonPropertyName("attr")]
+        [BsonElement("attr")]
         public string? Attr { get; set; }
 
-        [JsonPropertyName("sColour")]
+        [BsonElement("sColour")]
         public string? SocketColour { get; set; }
     }
 }
