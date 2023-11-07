@@ -1,6 +1,7 @@
 ﻿using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Driver;
+using PoESnap.Services.CharacterUpdateService;
 
 namespace PoESnap.Services.CharacterService
 {
@@ -9,13 +10,17 @@ namespace PoESnap.Services.CharacterService
         private readonly ILogger<CharacterService> _logger;
         private readonly HttpClient _httpClient;
         private static string MongoConnectionString = "mongodb://localhost:27017";
-        private readonly IMongoDatabase characterDatabase;
+        private readonly IMongoDatabase _characterDatabase;
         private readonly IMongoCollection<Character> _characterCollection;
+        private readonly ICharacterUpdateService _characterUpdateService;
 
-        public CharacterService(ILogger<CharacterService> logger)
+        public CharacterService(ILogger<CharacterService> logger, ICharacterUpdateService characterUpdateService)
         {
             _logger = logger;
+            _characterUpdateService = characterUpdateService;
             _httpClient = new HttpClient();
+
+            _characterUpdateService.StartUpdates();
 
             // This allows automapping of the camelCase database fields to our models. 
             var camelCaseConvention = new ConventionPack { new CamelCaseElementNameConvention() };
@@ -24,8 +29,8 @@ namespace PoESnap.Services.CharacterService
 
             // Establish the connection to MongoDB and get the restaurants database
             var mongoClient = new MongoClient(MongoConnectionString);
-            characterDatabase = mongoClient.GetDatabase("poe_snap");
-            _characterCollection = characterDatabase.GetCollection<Character>("characters");
+            _characterDatabase = mongoClient.GetDatabase("poe_snap");
+            _characterCollection = _characterDatabase.GetCollection<Character>("characters");
         }
 
         public Models.Character GetCharacter(string characterName)

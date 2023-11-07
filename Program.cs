@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using PoESnap.Services.CharacterService;
+using PoESnap.Services.CharacterUpdateService;
 
 namespace PoESnap
 {
@@ -20,6 +21,7 @@ namespace PoESnap
             });
 
             builder.Services.AddSingleton<ICharacterService, CharacterService>();
+            builder.Services.AddSingleton<ICharacterUpdateService, CharacterUpdateService>();
 
             builder.Services.AddControllers();
 
