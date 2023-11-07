@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using PoESnap.Controllers.ApiModels;
-using PoESnap.Models;
-using PoESnap.Services;
+using PoESnap.Services.CharacterService;
 
 namespace PoESnap.Controllers
 {
@@ -23,7 +22,7 @@ namespace PoESnap.Controllers
         [HttpGet("{characterName}")]
         public IActionResult GetCharacterByName(string characterName)
         {
-            Character character;
+            Models.Character character;
 
             if (string.IsNullOrWhiteSpace(characterName))
             {

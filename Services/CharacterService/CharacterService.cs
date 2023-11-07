@@ -1,9 +1,8 @@
 ﻿using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Driver;
-using PoESnap.Models;
 
-namespace PoESnap.Services
+namespace PoESnap.Services.CharacterService
 {
     public class CharacterService : ICharacterService
     {
@@ -25,12 +24,11 @@ namespace PoESnap.Services
 
             // Establish the connection to MongoDB and get the restaurants database
             var mongoClient = new MongoClient(MongoConnectionString);
-            characterDatabase = mongoClient.GetDatabase("poe_snap"); 
+            characterDatabase = mongoClient.GetDatabase("poe_snap");
             _characterCollection = characterDatabase.GetCollection<Character>("characters");
-
         }
 
-        public Character GetCharacter(string characterName)
+        public Models.Character GetCharacter(string characterName)
         {
             if (_characterCollection == null)
             {
@@ -40,22 +38,30 @@ namespace PoESnap.Services
             try
             {
                 var character = _characterCollection.AsQueryable().Where(r => r.Metadata != null && r.Metadata.Name == characterName).FirstOrDefault();
-                
+
                 if (character == null)
                 {
                     throw new Exception("Character not found");
                 }
 
-                return character;
+                var resultCharacter = new Models.Character();
+
+                resultCharacter.Metadata = character.Metadata;
+                if (character.Snapshots.Count > 0)
+                {
+                    resultCharacter.Items = character.Snapshots.OrderByDescending(s => s.SnapshotFetchTime).ToList().First().Items;
+                }
+
+                return resultCharacter;
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message, ex);
                 throw;
-            }     
+            }
         }
 
-        public async Task<Character> GetCharacterAsync(string characterName)
+        public async Task<Models.Character> GetCharacterAsync(string characterName)
         {
             if (characterName == null)
             {
@@ -80,19 +86,25 @@ namespace PoESnap.Services
 
         public async void AddCharacter(string accountName, string characterName)
         {
-            var character = _characterCollection.AsQueryable().Where(c => c.Metadata != null && c.Metadata.Name == characterName).FirstOrDefault();
+            var decodedAccountName = System.Uri.UnescapeDataString(accountName);
+            var decodedCharacterName = System.Uri.UnescapeDataString(characterName);
+
+            var character = _characterCollection.AsQueryable().Where(c => c.Metadata != null && c.Metadata.Name == decodedCharacterName).FirstOrDefault();
 
             if (character != null)
                 return;
 
-            var result = await _httpClient.GetStringAsync($"https://www.pathofexile.com/character-window/get-items?accountName={accountName}&character={characterName}&realm=pc");
+            var result = await _httpClient.GetStringAsync($"https://www.pathofexile.com/character-window/get-items?accountName={decodedAccountName}&character={decodedCharacterName}&realm=pc");
 
-            character = BsonSerializer.Deserialize<Character>(result);
+            var modelCharacter = BsonSerializer.Deserialize<Models.Character>(result);
 
-            if (character != null)
-            {
-                _characterCollection.InsertOne(character);
-            }
+            character = new Character();
+
+            character.Metadata = modelCharacter.Metadata;
+            character.LastFetched = DateTime.UtcNow;
+            character.Snapshots.Add(new CharacterSnapshot { Items = modelCharacter.Items, SnapshotFetchTime = DateTime.UtcNow });
+
+            _characterCollection.InsertOne(character);
         }
     }
 }

@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Authorization;
-using PoESnap.Services;
+using PoESnap.Services.CharacterService;
 
 namespace PoESnap
 {

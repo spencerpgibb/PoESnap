@@ -33,7 +33,7 @@ export default Character;
 
 export async function loader({ params }) {
   const response = await fetch(
-    "http://localhost:5270/api/character/" + params.characterName
+    encodeURI("http://localhost:5270/api/character/" + params.characterName)
   );
   const responseData = await response.json();
   return responseData.items;
