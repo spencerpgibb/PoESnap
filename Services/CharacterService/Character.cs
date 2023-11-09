@@ -18,9 +18,13 @@ namespace PoESnap.Services.CharacterService
         [BsonElement("character")]
         public CharacterMetadata? Metadata { get; set; }
 
+        [BsonElement("accountName")]
+        public string AccountName { get; set; }
+
         public Character() 
         {
             Snapshots = new List<CharacterSnapshot>();
+            AccountName = string.Empty;
         }
     }
 }

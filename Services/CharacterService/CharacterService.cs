@@ -107,6 +107,7 @@ namespace PoESnap.Services.CharacterService
 
             character.Metadata = modelCharacter.Metadata;
             character.LastFetched = DateTime.UtcNow;
+            character.AccountName = decodedAccountName;
             character.Snapshots.Add(new CharacterSnapshot { Items = modelCharacter.Items, SnapshotFetchTime = DateTime.UtcNow });
 
             _characterCollection.InsertOne(character);
