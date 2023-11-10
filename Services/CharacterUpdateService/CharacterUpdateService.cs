@@ -35,7 +35,7 @@ namespace PoESnap.Services.CharacterUpdateService
             if (_isStarted)
                 return;
             var cts = new CancellationTokenSource();
-            RecurringTask(() => UpdateCharacters(), 5, cts.Token);
+            RecurringTask(() => UpdateCharacters(), 15, cts.Token);
             _isStarted = true;
         }
 
@@ -64,7 +64,7 @@ namespace PoESnap.Services.CharacterUpdateService
             {
                 TimeSpan timeSinceLastFetch = DateTime.UtcNow.Subtract(character.LastFetched);
 
-                if (timeSinceLastFetch.TotalMinutes >= 10)
+                if (timeSinceLastFetch.TotalMinutes >= 10 && character.AccountName != null && character.Metadata != null && character.Metadata.Name != null)
                 {
                     var result = await _httpClient.GetStringAsync($"https://www.pathofexile.com/character-window/get-items?accountName={character.AccountName}&character={character.Metadata.Name}&realm=pc");
                     var fetchTime = DateTime.UtcNow;
@@ -72,7 +72,7 @@ namespace PoESnap.Services.CharacterUpdateService
                     var modelCharacter = BsonSerializer.Deserialize<Models.Character>(result);
 
                     // Update snapshots for given character with items just fetched
-                    var snapshotFilter = Builders<Character>.Filter.Eq(c => c.Metadata.Name, character.Metadata.Name);
+                    var snapshotFilter = Builders<Character>.Filter.Eq(c => c.Metadata.Name, value: character.Metadata.Name);
 
                     character.Snapshots.Add(new CharacterSnapshot { Items = modelCharacter.Items, SnapshotFetchTime = DateTime.UtcNow });
 

@@ -22,7 +22,7 @@ namespace PoESnap.Controllers
         [HttpGet("{characterName}")]
         public IActionResult GetCharacterByName(string characterName)
         {
-            Models.Character character;
+            Character character;
 
             if (string.IsNullOrWhiteSpace(characterName))
             {

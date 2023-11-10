@@ -33,7 +33,7 @@ namespace PoESnap.Services.CharacterService
             _characterCollection = _characterDatabase.GetCollection<Character>("characters");
         }
 
-        public Models.Character GetCharacter(string characterName)
+        public Character GetCharacter(string characterName)
         {
             if (_characterCollection == null)
             {
@@ -49,15 +49,7 @@ namespace PoESnap.Services.CharacterService
                     throw new Exception("Character not found");
                 }
 
-                var resultCharacter = new Models.Character();
-
-                resultCharacter.Metadata = character.Metadata;
-                if (character.Snapshots.Count > 0)
-                {
-                    resultCharacter.Items = character.Snapshots.OrderByDescending(s => s.SnapshotFetchTime).ToList().First().Items;
-                }
-
-                return resultCharacter;
+                return character;
             }
             catch (Exception ex)
             {
@@ -66,7 +58,7 @@ namespace PoESnap.Services.CharacterService
             }
         }
 
-        public async Task<Models.Character> GetCharacterAsync(string characterName)
+        public async Task<Character> GetCharacterAsync(string characterName)
         {
             if (characterName == null)
             {
